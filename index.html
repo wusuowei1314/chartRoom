@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>input{width:600px;}</style>
+    
+</head>
+<body>
+    <h1>node.js聊天室</h1>
+    <input type="text" id="inin">
+    <button onclick="send()">发送</button>
+
+
+<!-- 匹配后端接口 -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        // socket前端接口，用来在客户端接收和发送消息
+        const socket = io.connect('/')
+        function send(){
+            // 获取文本框所输入的内容
+            var txt = document.getElementById('inin')
+            
+            socket.send(txt.value)
+            txt.value ="";
+        }
+       socket.on('message',(msg) => {
+           console.log(msg)
+           const div = document.createElement('div')
+           div.className="mes"
+           div.innerText = msg
+           document.body.appendChild(div)
+       })
+    </script>
+</body>
+</html>
